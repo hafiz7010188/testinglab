@@ -1,0 +1,26 @@
+---
+- name: Performance and Storage Audit
+  hosts: all
+  become: yes
+  tasks:
+    - name: Get Disk Usage for Root Partition
+      ansible.builtin.shell: "df -h / | awk 'NR==2 {print $5}'"
+      register: disk_usage
+
+    - name: Get Memory Usage
+      ansible.builtin.shell: "free -m | grep Mem | awk '{print $3\"MB / \"$2\"MB\"}'"
+      register: mem_usage
+
+    - name: Get CPU Load
+      ansible.builtin.shell: "uptime | awk -F'load average:' '{ print $2 }'"
+      register: cpu_load
+
+    - name: Display Health Report
+      ansible.builtin.debug:
+        msg: 
+          - "------------------------------------------"
+          - "HOSTNAME: {{ ansible_hostname }}"
+          - "DISK USED: {{ disk_usage.stdout }}"
+          - "MEMORY: {{ mem_usage.stdout }}"
+          - "CPU LOAD: {{ cpu_load.stdout }}"
+          - "------------------------------------------"
