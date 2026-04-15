@@ -1,0 +1,6 @@
+---
+- name: Hello from GitHub
+  hosts: all
+  tasks:
+    - name: Ping test
+      ansible.builtin.ping:
