@@ -1,0 +1,23 @@
+---
+- name: Automate Log Maintenance
+  hosts: all
+  become: yes
+  tasks:
+    - name: Find rotated log files older than 14 days
+      ansible.builtin.find:
+        paths: /var/log
+        patterns: "*.gz,*.1,*.old"
+        age: 14d
+        recurse: yes
+      register: logs_to_delete
+
+    - name: Remove the identified old log files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ logs_to_delete.files }}"
+      when: logs_to_delete.matched > 0
+
+    - name: Report how many files were cleaned up
+      ansible.builtin.debug:
+        msg: "Cleaned up {{ logs_to_delete.matched }} old log files from /var/log"
