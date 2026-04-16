@@ -1,0 +1,12 @@
+---
+- name: Connection Test Playbook
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Ping the nodes
+      ping:
+
+    - name: Report OS and IP
+      debug:
+        msg: "Connected to {{ inventory_hostname }} running {{ ansible_distribution }}"
