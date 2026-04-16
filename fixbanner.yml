@@ -1,0 +1,20 @@
+---
+- name: Fix Double Banner Issue
+  hosts: all
+  become: yes
+  tasks:
+    - name: Clear the dynamic MOTD folder (Ubuntu specific)
+      file:
+        path: /etc/update-motd.d/
+        state: absent
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Ensure MOTD is only in one place
+      copy:
+        dest: /etc/motd
+        content: |
+          **************************************************
+          * MANAGED BY ANSIBLE AWX Hafiz TestLab           *
+          * AUTHORIZED PERSONNEL ONLY                      *
+          **************************************************
+        force: yes
