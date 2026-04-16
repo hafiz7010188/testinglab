@@ -1,0 +1,16 @@
+---
+- name: Deploy Web Server Test
+  hosts: all
+  become: yes  # This tests your sudo permissions
+  tasks:
+    - name: Ensure Nginx is installed
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure Nginx is started
+      service:
+        name: nginx
+        state: started
+        enabled: yes
