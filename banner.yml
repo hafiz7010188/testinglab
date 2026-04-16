@@ -8,6 +8,6 @@
         dest: /etc/motd
         content: |
           **************************************************
-          * MANAGED BY ANSIBLE AWX (NODE 044) Hafiz TestLab *
+          * MANAGED BY ANSIBLE AWX Hafiz TestLab           *
           * AUTHORIZED PERSONNEL ONLY                      *
           **************************************************
