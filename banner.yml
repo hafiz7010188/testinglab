@@ -1,0 +1,13 @@
+---
+- name: Branding the Lab Nodes
+  hosts: all
+  become: yes
+  tasks:
+    - name: Set custom login message
+      copy:
+        dest: /etc/motd
+        content: |
+          **************************************************
+          * MANAGED BY ANSIBLE AWX (NODE 044) Hafiz TestLab *
+          * AUTHORIZED PERSONNEL ONLY                      *
+          **************************************************
